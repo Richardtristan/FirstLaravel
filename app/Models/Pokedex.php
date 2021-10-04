@@ -22,16 +22,24 @@ class Pokedex extends Model
         $this->pokemons;
         $this->id = $id;
     }
-    function getPokemons()
+    function getPokemons($id)
     {
         $poke = $this->db->prepare("SELECT pokemons FROM pokedex WHERE userId = ?");
+        $poke->execute([$id]);
+        if ($poke == null){
+            return false;
+        }
         $poke->execute([$this->id]);
         return $poke->fetch();
     }
-    function setPokemons($actualPokedex, $pokemons)
+    function setPokemons($id)
     {
-        $poke = $this->db->prepare("UPDATE pokedex set pokemons=? WHERE userId = ?");
-        $poke->execute([$actualPokedex.$pokemons, $this->id]);
+        $poke = $this->db->prepare("INSERT INTO `pokedex`(`userId`, `pokemons`, `date`) WHERE userId = ?");
+        $poke->execute([$id, '0', '2021-09-19 17:29:49', $id]);
+    }
+    function newPokemons($id){
+        $date = $this->db->prepare("SELECT date FROM pokedex WHERE userId = ?");
+        $date->execute([ $this->id]);
     }
     function getDate()
     {
