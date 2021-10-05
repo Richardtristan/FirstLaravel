@@ -25,28 +25,29 @@
 {{--                </div>--}}
 {{--            </div>--}}
 {{--        </div>--}}
-        {{--        <div id='modalLucky' style='display: block' class='myModal modal is-valid' tabindex='-1'>--}}
-        {{--            <div class='myModal modal-dialog'>--}}
-        {{--                <div class='modal-content'>--}}
-        {{--                    <div class='modal-header'>--}}
-        {{--                        <h5 class='modal-title'>come back later</h5>--}}
-        {{--                        <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>--}}
-        {{--                    </div>--}}
-        {{--                    <div class='modal-body'>--}}
-        {{--                        <p>you haven't waited long enough. Date of next capture : </p>--}}
-        {{--                    </div>--}}
-        {{--                    <div class='modal-footer'>--}}
-        {{--                        <button type='button' class='btn btn-secondary ' data-bs-dismiss='modal'>Close</button>--}}
-        {{--                    </div>--}}
-        {{--                </div>--}}
-        {{--            </div>--}}
-        {{--        </div>--}}
+                <div id='modalLucky' style='display: block' class='myModal modal is-valid' tabindex='-1'>
+                    <div class='myModal modal-dialog'>
+                        <div class='modal-content'>
+                            <div class='modal-header'>
+                                <h5 class='modal-title'>come back later</h5>
+                                <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+                            </div>
+                            <div class='modal-body'>
+                                <p> {{$error}} </p>
+                            </div>
+                            <div class='modal-footer'>
+                                <button type='button' class='btn btn-secondary ' data-bs-dismiss='modal'>Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
         <form class="w-50 h-50" method="post"
               style="padding-top: 5%;  display: block; margin-left: auto; margin-right: auto; ">
+            @csrf
             <input name="pokemon" data-toggle="tooltip" data-placement="top" title="Click on me" type="image"
                    src="{{ asset('img/pokeball.png') }}" alt="Submit" width="100%" height="100%">
         </form>
-
+        </div>
     </section>
 @endsection

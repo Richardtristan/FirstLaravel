@@ -27,7 +27,8 @@ Route::get('/pokedex', function () {
 //Route::get('/lucky', function () {
 //    return view('site/lucky');
 //})->middleware('auth', 'verified');
-Route::get('/lucky', 'App\Http\Controllers\LuckyController@Post' ,'');
+Route::get('/lucky', 'App\Http\Controllers\LuckyController@Post' ,'')->middleware('auth', 'verified');
+Route::post('/lucky', 'App\Http\Controllers\LuckyController@Post' ,'')->middleware('auth', 'verified');
 
 
 Route::get('/ladder', function () {

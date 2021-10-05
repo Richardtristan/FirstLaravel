@@ -13,7 +13,7 @@ class CreatePokedexTable extends Migration
      */
     public function up()
     {
-        Schema::create('pokedex', function (Blueprint $table) {
+        Schema::create('pokedexes', function (Blueprint $table) {
             $table->id();
             $table->integer('userId');
             $table->text('pokemons')->default("0");

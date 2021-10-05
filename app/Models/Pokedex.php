@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Pokedex extends Model
 {
@@ -15,47 +16,38 @@ class Pokedex extends Model
      * @param $pokemons
      * @param $id
      */
-    public function __construct($id)
-    {
-        global $db;
-        $this->db = $db;
-        $this->pokemons;
-        $this->id = $id;
-    }
+
     function getPokemons($id)
     {
-        $poke = $this->db->prepare("SELECT pokemons FROM pokedex WHERE userId = ?");
-        $poke->execute([$id]);
+        $poke = DB::select("SELECT pokemons FROM pokedexes WHERE userId = $id");
         if ($poke == null){
-            return false;
+            DB::table('pokedexes')->where('id', '=', $id)
+                ->updateOrInsert(
+                    ['userId' => $id],
+                    ['pokemons' => '0'],
+                    ['date' => '2021-09-19 17:29:49']
+                );
         }
-        $poke->execute([$this->id]);
-        return $poke->fetch();
+
+        return $poke;
     }
-    function setPokemons($id)
+    function setPokemons($actual, $randId, $date, $id)
     {
-        $poke = $this->db->prepare("INSERT INTO `pokedex`(`userId`, `pokemons`, `date`) WHERE userId = ?");
-        $poke->execute([$id, '0', '2021-09-19 17:29:49', $id]);
+        DB::update('update pokedexes set pokemons = ?, date = ? where userId = ?', [$actual . ',' . $randId,$date,$id]);
     }
-    function newPokemons($id){
-        $date = $this->db->prepare("SELECT date FROM pokedex WHERE userId = ?");
-        $date->execute([ $this->id]);
-    }
-    function getDate()
+
+    function getDate($id)
     {
-        $date = $this->db->prepare("SELECT date FROM pokedex WHERE userId = ?");
-        $date->execute([ $this->id]);
-        return $date->fetch();
+        $date = DB::select("SELECT date FROM pokedexes WHERE userId = $id");
+        return $date;
     }
-    function setDate($dateNow)
+    function setDate($dateNow, $id)
     {
-        $date = $this->db->prepare("UPDATE pokedex set date=? WHERE userId = ?");
-        $date->execute([$dateNow, $this->id]);
+        $date = DB::update('update pokedexes set date = ? where userId = ?', [$dateNow,$id]);
     }
     function ladderPokedex()
     {
-        $ladder = $this->db->prepare("SELECT username,pokemons FROM users INNER JOIN pokedex on pokedex.userId = users.id");
-        $ladder->execute();
-        return $ladder->fetchall();
+        $ladder = DB::select("SELECT username,pokemons FROM users INNER JOIN pokedexes on pokedexes.userId = users.id");
+        return $ladder;
     }
 }
